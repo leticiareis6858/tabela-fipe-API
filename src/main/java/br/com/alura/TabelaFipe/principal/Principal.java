@@ -7,7 +7,9 @@ import br.com.alura.TabelaFipe.service.ConverteDados;
 
 import java.util.Comparator;
 import java.util.InputMismatchException;
+import java.util.List;
 import java.util.Scanner;
+import java.util.stream.Collectors;
 
 public class Principal {
     private Scanner scanner = new Scanner(System.in);
@@ -72,6 +74,17 @@ public class Principal {
                 modeloLista.modelosVeiculos().stream()
                         .sorted(Comparator.comparing(Dados::nome))
                         .forEach(System.out::println);
+
+                System.out.println("Digite o código do modelo a ser consultado: ");
+                var codigoVeiculo=scanner.nextLine();
+
+                List<Dados> modelosFiltrados=modeloLista.modelosVeiculos().stream()
+                        .filter(m->m.codigo().equals(codigoVeiculo))
+                        .collect(Collectors.toList());
+
+                System.out.println("\nModelos do veículo filtrados: ");
+                modelosFiltrados.forEach(System.out::println);
+
             }
         } catch (InputMismatchException e) {
             System.out.println("Entrada inválida. Por favor, insira um número.");
