@@ -83,6 +83,23 @@ public class Principal {
                 System.out.println("\nModelos do veículo filtrados: ");
                 modelosFiltrados.forEach(System.out::println);
 
+                System.out.println("Digite o código do modelo para buscar os valores: ");
+                var codigoModelo = scanner.nextLine();
+
+                endereco = endereco + "/" + codigoModelo + "/anos";
+                json = consumoApi.obterDados(endereco);
+                List<Dados> anosModelo = conversor.obterLista(json, Dados.class);
+                List<Veiculo> veiculos = new ArrayList<>();
+
+                for (int i = 0; i < anosModelo.size(); i++) {
+                    var enderecoAnos = endereco + "/" + anosModelo.get(i).codigo();
+                    json=consumoApi.obterDados(enderecoAnos);
+                    Veiculo veiculo=conversor.obterDados(json,Veiculo.class);
+                    veiculos.add(veiculo);
+                }
+                System.out.println("\nTodas as avaliações do veículo por ano: ");
+                veiculos.forEach(System.out::println);
+
             }
         } catch (InputMismatchException e) {
             System.out.println("Entrada inválida. Por favor, insira um número.");
