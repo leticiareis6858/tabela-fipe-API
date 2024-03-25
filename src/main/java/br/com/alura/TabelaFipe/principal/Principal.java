@@ -16,6 +16,7 @@ public class Principal {
     private ConverteDados conversor = new ConverteDados();
 
     public void exibeMenu() {
+        //cria o menu que é exibido no console
         int opcao = 0;
         String endereco = null;
 
@@ -53,14 +54,14 @@ public class Principal {
             }
 
             if (endereco != null) {
+                //retorna todas as marcas de acordo com o tipo de veículo informado
                 String json = consumoApi.obterDados(endereco);
                 System.out.println(json);
 
                 var marcas = conversor.obterLista(json, Dados.class);
-                marcas.stream()
-                        .sorted(Comparator.comparing(Dados::nome))
-                        .forEach(System.out::println);
+                marcas.stream().sorted(Comparator.comparing(Dados::nome)).forEach(System.out::println);
 
+                //consulta todos os modelos da marca que tiver o código digitado no console
                 System.out.println("Digite o código da marca a ser consultada: ");
                 var codigoMarca = scanner.nextLine();
 
@@ -69,20 +70,20 @@ public class Principal {
                 var modeloLista = conversor.obterDados(json, ModelosVeiculos.class);
 
                 System.out.println("Modelos dessa marca:\n");
-                modeloLista.modelosVeiculos().stream()
-                        .sorted(Comparator.comparing(Dados::nome))
-                        .forEach(System.out::println);
+                modeloLista.modelosVeiculos().stream().sorted(Comparator.comparing(Dados::nome)).forEach(System.out::println);
 
+                //consulta especificamente um modelo a partir do seu nome ou trecho do nome
+                //(retorna todas as variações do modelo)
                 System.out.println("Digite o nome ou um trecho do nome do modelo a ser consultado: ");
                 var nomeVeiculo = scanner.nextLine();
 
-                List<Dados> modelosFiltrados = modeloLista.modelosVeiculos().stream()
-                        .filter(m -> m.nome().toLowerCase().contains(nomeVeiculo.toLowerCase()))
-                        .collect(Collectors.toList());
+                List<Dados> modelosFiltrados = modeloLista.modelosVeiculos().stream().filter(m -> m.nome().toLowerCase().contains(nomeVeiculo.toLowerCase())).collect(Collectors.toList());
 
                 System.out.println("\nModelos do veículo filtrados: ");
                 modelosFiltrados.forEach(System.out::println);
 
+                //consulta os valores do modelo que tiver seu código digitado
+                //(retorna os valores de acordo com ano de lançamento)
                 System.out.println("Digite o código do modelo para buscar os valores: ");
                 var codigoModelo = scanner.nextLine();
 
@@ -93,8 +94,8 @@ public class Principal {
 
                 for (int i = 0; i < anosModelo.size(); i++) {
                     var enderecoAnos = endereco + "/" + anosModelo.get(i).codigo();
-                    json=consumoApi.obterDados(enderecoAnos);
-                    Veiculo veiculo=conversor.obterDados(json,Veiculo.class);
+                    json = consumoApi.obterDados(enderecoAnos);
+                    Veiculo veiculo = conversor.obterDados(json, Veiculo.class);
                     veiculos.add(veiculo);
                 }
                 System.out.println("\nTodas as avaliações do veículo por ano: ");
