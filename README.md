@@ -6,6 +6,8 @@ Com esta aplicação é possível consultar todas as marcas de veículos a parti
 
 Aplicação feita como desafio da última aula do curso ***"Java: trabalhando com lambdas, streams e Spring Framework!"*** da _Alura_.
 
+Essa aplicação faz uso da **FIPE API HTTP REST** criada por [@deividfortuna](https://github.com/deividfortuna) e disponível em: https://deividfortuna.github.io/fipe/
+
 ## 🚀 Tecnologias
 
 Esse projeto foi desenvolvido com as seguintes tecnologias: _Java 17_, _Spring Boot_, _Jackson Databidn_, _Maven_, _IntelliJ IDEA_.
